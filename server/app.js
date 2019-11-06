@@ -9,7 +9,12 @@ router.get('/classic/latest', (ctx, next) => {
     ctx.body = {
         key: 'classic'
     }
-    next();
+})
+
+router.get('/classic/latest', (ctx, next) => {
+    ctx.body = {
+        key: 'classic'
+    }
 })
 
 app
