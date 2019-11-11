@@ -6,6 +6,7 @@ class InitManager {
     static initCore(app) {
         // 入口方法
         this.app = app;
+        this.loadHttpExceptions();
         this.initLoadRouters()
     }
 
@@ -20,6 +21,10 @@ class InitManager {
                 }
             }
         });
+    }
+    static loadHttpExceptions() {
+        const errors = require('./http-exception');
+        global.errs = errors;
     }
 
 }
