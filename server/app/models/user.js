@@ -30,4 +30,5 @@ User.init({
     }
 }, {
     sequelize,
+    tableName: 'user'   //指定表名字
 })
