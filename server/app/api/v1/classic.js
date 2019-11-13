@@ -4,6 +4,9 @@ const {
     HttpException,
     ParameterException
 } = require('../../../core/http-exception')
+const {
+    PositiveIntegerValidator
+} = require('../../validators/validator')
 
 router.get('/api/v1/classic/lastest', async (ctx, next) => {
     ctx.body = {
@@ -17,11 +20,8 @@ router.post('/api/v1/:id/lastest', async (ctx, next) => {
     const query = ctx.request.query; // 获取地址栏中#后面的参数
     const headers = ctx.request.header; // 获取请求的headers
     const body = ctx.request.body; // 获取请求的payload  
-
-    // 抛出异常
-    const error = new ParameterException();
-    throw error;
-
+    const v = new PositiveIntegerValidator();
+    v.validate(ctx);
 
     ctx.body = {
         path,
