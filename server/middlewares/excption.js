@@ -8,11 +8,14 @@ const catchError = async (ctx, next) => {
     } catch (error) {
         // 开发环境
         // 生产环境
-        if (global.config.environment === 'dev') {
+        const isHttpException = error instanceof HttpException
+        const isDev = global.config.environment === 'dev'
+        // 抛出异常的需求: 当前环境为开发环境 当前错误不是一个httpException
+        if (isDev && !isHttpException) {
             throw error;
         }
 
-        if (error instanceof HttpException) {
+        if (isHttpException) {
             // 这里是已知错误
             ctx.body = {
                 msg: error.msg,

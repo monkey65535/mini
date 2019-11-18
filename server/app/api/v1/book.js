@@ -1,7 +1,9 @@
 const Router = require('koa-router');
-const router = new Router();
+const router = new Router({
+    prefix: "/api/v1/book"
+});
 
-router.get('/api/v1/book/book', async (ctx, next) => {
+router.get('/book', async (ctx, next) => {
     ctx.body = {
         book: "book"
     }
