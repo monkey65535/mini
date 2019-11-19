@@ -9,7 +9,7 @@ app.use(bodyParser());
 app.use(catchError);
 InitManager.initCore(app);
 
-require('./app/models/user')
+// require('./app/models/user')
 
 
 app.listen(3003, () => {
