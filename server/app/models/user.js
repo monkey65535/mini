@@ -2,10 +2,26 @@ const bcrypt = require('bcryptjs')
 const {sequelize} = require('../../core/db')
 const {Sequelize, Model} = require('sequelize')
 
-
 // 创建一个User表
 class User extends Model {
-
+    // 创建一个用户登录验证器
+    static async verifyEmallPassword(email, plainPassword) {
+        const user = await User.findOne({
+            where: {
+                email
+            }
+        })
+        // 如果没有对应的用户
+        if (!user) {
+            // 抛出异常
+            throw new global.errs.AuthFailed('账号不存在')
+        }
+        const corect = bcrypt.compareSync(plainPassword, user.password);
+        if (!corect) {
+            throw new global.errs.AuthFailed('密码错误');
+        }
+        return user;
+    }
 }
 
 // 初始化User表，设置表的字段
