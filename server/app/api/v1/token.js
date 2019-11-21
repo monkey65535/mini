@@ -6,6 +6,7 @@ const {TokenValidator} = require('../../validators/validator')
 const {LoginType} = require('../../lib/enum')
 const {User} = require('../../models/user')
 const {generateToken} = require('../../../core/util')
+const {Auth} = require('../../../middlewares/auth')
 router.post('/', async (ctx, next) => {
     const v = await new TokenValidator().validate(ctx);
     let token = '';
@@ -25,7 +26,7 @@ router.post('/', async (ctx, next) => {
 // 通过数据库匹配email和密码 如果通过匹配那么颁布一个token
 async function emailLogin(account, secret) {
     const user = await User.verifyEmallPassword(account, secret)
-    return generateToken(user.id, 2)
+    return generateToken(user.id, Auth.USER)
 }
 
 module.exports = router
