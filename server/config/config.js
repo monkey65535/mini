@@ -8,5 +8,9 @@ module.exports = {
         password: '123',
         port: '3306',
         dbName: 'island'
+    },
+    security: {
+        secretKey: "1qaz@wsx",
+        expiresIn: 60 * 60 * 24 * 30      // 过期时间 1个小时
     }
 }

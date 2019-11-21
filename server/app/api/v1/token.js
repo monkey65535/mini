@@ -5,11 +5,13 @@ const router = new Router({
 const {TokenValidator} = require('../../validators/validator')
 const {LoginType} = require('../../lib/enum')
 const {User} = require('../../models/user')
+const {generateToken} = require('../../../core/util')
 router.post('/', async (ctx, next) => {
     const v = await new TokenValidator().validate(ctx);
+    let token = '';
     switch (v.get('body.type')) {
         case LoginType.USER_EMAIL:
-            emailLogin(v.get('body.account'), v.get('body.secret'));
+            token = await emailLogin(v.get('body.account'), v.get('body.secret'));
             break;
         case LoginType.USER_MINI_PROGRAM:
             break;
@@ -17,11 +19,13 @@ router.post('/', async (ctx, next) => {
             throw new global.errs.ParameterException('没有相应的处理函数')
             break;
     }
+    ctx.body = {token};
 })
 
 // 通过数据库匹配email和密码 如果通过匹配那么颁布一个token
 async function emailLogin(account, secret) {
     const user = await User.verifyEmallPassword(account, secret)
+    return generateToken(user.id, 2)
 }
 
 module.exports = router
