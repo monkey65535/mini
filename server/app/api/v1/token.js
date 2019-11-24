@@ -7,14 +7,18 @@ const {LoginType} = require('../../lib/enum')
 const {User} = require('../../models/user')
 const {generateToken} = require('../../../core/util')
 const {Auth} = require('../../../middlewares/auth')
+const {WXManager} = require('../../service/wx')
 router.post('/', async (ctx, next) => {
     const v = await new TokenValidator().validate(ctx);
     let token = '';
     switch (v.get('body.type')) {
         case LoginType.USER_EMAIL:
+            //  email登录
             token = await emailLogin(v.get('body.account'), v.get('body.secret'));
             break;
         case LoginType.USER_MINI_PROGRAM:
+            // 小程序登录
+            token = await new WXManager.codeToToken(v.get('body.account'))
             break;
         default:
             throw new global.errs.ParameterException('没有相应的处理函数')

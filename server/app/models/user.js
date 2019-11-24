@@ -22,6 +22,25 @@ class User extends Model {
         }
         return user;
     }
+
+    // 创建一个小程序角色登陆器
+    // 首先查询是否已经注册 如果没有,那么就将数据入库
+    // 查询用户
+    static async getUserByOpenid(openid) {
+        const user = await User.findOne({
+            where: {
+                openid
+            }
+        })
+        return user;
+    }
+
+    static async registerUserByOpenid(openid) {
+        const result = await User.create({
+            openid
+        });
+        return result;
+    }
 }
 
 // 初始化User表，设置表的字段
