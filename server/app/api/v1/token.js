@@ -2,7 +2,7 @@ const Router = require('koa-router')
 const router = new Router({
     prefix: "/api/v1/token"
 })
-const {TokenValidator} = require('../../validators/validator')
+const {TokenValidator, NotEmptyValidator} = require('../../validators/validator')
 const {LoginType} = require('../../lib/enum')
 const {User} = require('../../models/user')
 const {generateToken} = require('../../../core/util')
@@ -18,13 +18,22 @@ router.post('/', async (ctx, next) => {
             break;
         case LoginType.USER_MINI_PROGRAM:
             // 小程序登录
-            token = await new WXManager.codeToToken(v.get('body.account'))
+            token = await WXManager.codeToToken(v.get('body.account'))
             break;
         default:
             throw new global.errs.ParameterException('没有相应的处理函数')
             break;
     }
     ctx.body = {token};
+})
+
+router.post('/verify', async (ctx, next) => {
+    // 接收一个token
+    const v = await new NotEmptyValidator().validate(ctx);
+    const result = Auth.verifyToken(v.get('body.token'))
+    ctx.body = {
+        result
+    }
 })
 
 // 通过数据库匹配email和密码 如果通过匹配那么颁布一个token

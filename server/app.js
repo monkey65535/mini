@@ -12,6 +12,6 @@ InitManager.initCore(app);
 // require('./app/models/user')
 
 
-app.listen(3003, () => {
-    console.log('App is running at port 3003')
+app.listen(3010, () => {
+    console.log('App is running at port 3010')
 })
