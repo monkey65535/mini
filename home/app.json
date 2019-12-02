@@ -1,12 +1,13 @@
 {
-	"pages": [
-		"pages/classic/classic"
-	],
-	"window": {
-		"navigationBarBackgroundColor": "#ffffff",
-		"navigationBarTitleText": "dididili的小屋",
-		"navigationBarTextStyle": "black",
-		"navigationStyle": "default"
-	},
-	"sitemapLocation": "sitemap85.json"
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json"
 }
