@@ -6,13 +6,16 @@ const {HttpException, ParameterException} = require('../../../core/http-exceptio
 const {PositiveIntegerValidatorG} = require('../../validators/validator')
 const {Auth} = require('../../../middlewares/auth')
 const {Flow} = require('../../models/flow')
-
+const {Art} = require('../../models/art')
 router.get('/latest', new Auth().m, async (ctx, next) => {
     // 查询最新一期的期刊
     const flow = await Flow.findOne({
-        order:[['index','DESC']]
+        order: [['index', 'DESC']]
     })
-    ctx.body = flow;
+    const art = await Art.getData(flow.art_id, flow.type);
+    // 使用这种方法来修改数据库返回数据
+    art.setDataValue('index', flow.index);
+    ctx.body = art;
 })
 
 /* router.post('/api/v1/:id/lastest', async (ctx, next) => {
@@ -23,7 +26,7 @@ router.get('/latest', new Auth().m, async (ctx, next) => {
     const v = await new PositiveIntegerValidator();
     v.validate(ctx);
 
-    ctx.body = {
+    ctx.body = { 
         path,
         query,
         headers,
