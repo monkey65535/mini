@@ -29,5 +29,9 @@
     },
     "devDependencies": {
         "nodemon": "^1.19.4"
+    },
+    "_modulesAliases": {
+        "@root": ".",
+        "@models": "app/models"
     }
 }

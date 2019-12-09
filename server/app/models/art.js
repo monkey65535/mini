@@ -23,7 +23,7 @@ class Art {
             default:
                 break;
         }
-        return Art
+        return art
     }
 }
 

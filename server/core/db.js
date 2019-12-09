@@ -20,7 +20,14 @@ const sequelize = new Sequelize(dbName, user, password, {
         createAt: 'create_at',
         updatedAt: 'updated_at',
         deletedAt: 'deleted_at',
-        underscored: true       // 修改数据库字段驼峰命名为下划线式命名
+        underscored: true,       // 修改数据库字段驼峰命名为下划线式命名
+        scopes: {
+            bh: {
+                attributes: {
+                    exclude: ['create_at', 'updated_at', 'deleted_at']
+                }
+            }
+        }
     }
 })
 // 定义自动创建数据表

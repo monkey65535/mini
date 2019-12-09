@@ -52,15 +52,21 @@ User.init({
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true, // 设置主键
-        autoIncrement: true // 设置自增
+        autoIncrement: true, // 设置自增
+        comment: "用户id"
     },
-    nickname: Sequelize.STRING,
+    nickname: {
+        type: Sequelize.STRING,
+        comment: "用户名"
+    },
     email: {
         type: Sequelize.STRING(128),
-        unique: true
+        unique: true,
+        comment: "邮箱"
     },
     password: {
         type: Sequelize.STRING,
+        comment: "用户密码",
         set(val) {
             // 在入库前对val进行处理
             // 使用bcrypt给密码加盐
@@ -76,6 +82,7 @@ User.init({
     },
     openid: {
         type: Sequelize.STRING(64),
+        comment: "微信openID",
         unique: true // 设置唯一值
     }
 }, {
