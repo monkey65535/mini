@@ -82,4 +82,8 @@ router.get('/:type/:id/faovr', new Auth().m, async (ctx, next) => {
     }
 })
 
+router.get('favor', new Auth().m, async (ctx, next) => {
+    ctx.body = await Favor.getMyClassicFavours(ctx.auth.uid)
+})
+
 module.exports = router;

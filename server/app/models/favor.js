@@ -72,6 +72,23 @@ class Favor extends Model {
         })
         return favor ? true : false
     }
+
+    static async getMyClassicFavours(uid) {
+        const arts = await Favor.findAll({
+            where: {
+                uid,
+                // 判断type不等于400
+                type: {
+                    [Op.not]: 400
+                }
+            }
+        })
+        if (!arts) {
+            throw new global.errs.NotFound();
+        }
+        // 一定不能循环去查询数据库
+        return await Art.getList(arts)
+    }
 }
 
 Favor.init({
