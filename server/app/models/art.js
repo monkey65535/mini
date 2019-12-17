@@ -3,6 +3,25 @@ const {Op} = require('sequelize')
 const _ = require('lodash')
 
 class Art {
+
+    constructor(art_id, type) {
+        this.art_id = art_id;
+        this.type = type;
+    }
+
+    async getDetail(uid) {
+        const {Favor} = require('./favor')
+        const art = await Art.getData(this.art_id, this.type)
+        if (!art) {
+            throw new global.errs.NotFound()
+        }
+        const like = await Favor.userLikeIt(this.art_id, this.type, uid)
+        return {
+            art,
+            like_status: like
+        }
+    }
+
     static async getData(art_id, type) {
         const finder = {
             where: {

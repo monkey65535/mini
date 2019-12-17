@@ -67,6 +67,17 @@ router.get('/:index/previos', new Auth().m, async (ctx, next) => {
     ctx.body = art;
 })
 
+router.get('/:type/:id', new Auth().m, async (ctx, next) => {
+    const v = await new ClassicValidator().validate(ctx)
+    const id = v.get('path.id')
+    const type = v.get('path.type')
+    const artDetail = await new Art(id, type).getDetail(ctx.auth.uid)
+    ctx.body = {
+        art: artDetail.art,
+        like_status: artDetail.like_status
+    }
+})
+
 router.get('/:type/:id/faovr', new Auth().m, async (ctx, next) => {
     const v = await new ClassicValidator().validate(ctx)
     const id = v.get('path.id')
